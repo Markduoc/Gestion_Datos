@@ -1,0 +1,31 @@
+# Nombre del pipeline
+name: CI - Integración Continua
+
+# Se ejecuta automáticamente cada vez que se hace push a la rama main
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    # Corre en una máquina virtual con Ubuntu (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Descarga el código del repositorio
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      # Paso 2: Instala Python 3.11
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # Paso 3: Instala las dependencias del proyecto
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      # Paso 4: Ejecuta la aplicación para verificar que funciona
+      - name: Ejecutar app
+        run: python app.py
